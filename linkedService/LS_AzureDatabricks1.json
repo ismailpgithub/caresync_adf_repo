@@ -1,13 +1,20 @@
 {
 	"name": "LS_AzureDatabricks1",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "AzureDatabricks",
 		"typeProperties": {
 			"domain": "https://adb-7405610678742776.16.azuredatabricks.net",
-			"existingClusterId": "1110-135402-oebpeu1n",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDQxMTczMUM4LTY2M0YtNEMwRC05RDFBLTM0RUUxQzc2RjA1N182ZGNhNDcwNC0zY2UwLTRjMTYtYWEwMS02NDY1MDEwYjUwMWQiDQp9"
+			"accessToken": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_AzureKeyVault1",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "adb-token"
+			},
+			"existingClusterId": "1110-135402-oebpeu1n"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }
