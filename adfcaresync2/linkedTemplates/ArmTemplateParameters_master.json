@@ -1,0 +1,45 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adfcaresync2"
+		},
+		"LS_ADLS_properties_typeProperties_url": {
+			"value": "https://projectcaresync1.dfs.core.windows.net/"
+		},
+		"LS_AzureDatabricks1_properties_typeProperties_existingClusterId": {
+			"value": "1110-135402-oebpeu1n"
+		},
+		"LS_AzureDatabricks2_properties_typeProperties_existingClusterId": {
+			"value": "1110-135402-oebpeu1n"
+		},
+		"LS_AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://keyvault-caresync-1.vault.azure.net/"
+		},
+		"LS_AzureSqlDatabase_properties_typeProperties_server": {
+			"value": "server1-caresync.database.windows.net"
+		},
+		"LS_AzureSqlDatabase_properties_typeProperties_database": {
+			"value": "sql-db-caresync"
+		},
+		"LS_AzureSqlDatabase_properties_typeProperties_userName": {
+			"value": "gulam"
+		},
+		"LS_PostgreSql1_properties_typeProperties_server": {
+			"value": "ep-divine-mountain-a1qnv45b-pooler.ap-southeast-1.aws.neon.tech"
+		},
+		"LS_PostgreSql1_properties_typeProperties_database": {
+			"value": "neondb"
+		},
+		"LS_PostgreSql1_properties_typeProperties_username": {
+			"value": "neondb_owner"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
