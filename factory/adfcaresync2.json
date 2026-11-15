@@ -1,0 +1,12 @@
+{
+	"name": "adfcaresync2",
+	"properties": {
+		"globalParameters": {
+			"email_receipient": {
+				"type": "string",
+				"value": "pismail1721@gmail.com"
+			}
+		}
+	},
+	"location": "centralindia"
+}
