@@ -58,6 +58,100 @@
 					"variableName": "body_footer",
 					"value": "For any support, please reach out to the  abc@gmail.com"
 				}
+			},
+			{
+				"name": "Prepare email subject",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Read failure count",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "email_subject",
+					"value": {
+						"value": "@{pipeline().globalParameters.env} | @{if(greater(activity('Read failure count').output.firstRow.count, 0), 'FAILED', 'SUCCESS')} | CARESYNC MASTER RUN",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Read failure count",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "SELECT count(*) as count from ctrl.audit_log WHERE adf_run_id='@{pipeline().parameters.adf_run_id}'\nAND status != 'SUCCESS'",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_READ_TABLE_LIST",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Prepare logic apps body",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Prepare email subject",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Prepare email body footer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Prepare email body header",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Read all tables status",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "logic_apps_body",
+					"value": {
+						"value": "{\n\"subject\": \"@{variables('email_subject')}\",\n\"email_receipient\": \"@{pipeline().globalParameters.email_receipient}\",\n\"body_header\": \"@{variables('body_header')}\",\n\"body_footer\": \"@{variables('body_footer')}\",\n\"status_table\": @{activity('Read all tables status').output.value}\n}",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
@@ -71,6 +165,12 @@
 				"type": "String"
 			},
 			"body_footer": {
+				"type": "String"
+			},
+			"email_subject": {
+				"type": "String"
+			},
+			"logic_apps_body": {
 				"type": "String"
 			}
 		},
