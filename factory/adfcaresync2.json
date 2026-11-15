@@ -5,6 +5,10 @@
 			"email_receipient": {
 				"type": "string",
 				"value": "pismail1721@gmail.com"
+			},
+			"env": {
+				"type": "string",
+				"value": "DEV"
 			}
 		}
 	},
